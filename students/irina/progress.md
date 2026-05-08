@@ -76,3 +76,8 @@ Append-only файл. Новые записи добавляются в коне
 
 ### Следующий шаг
 → s3-w1-workshop-setup
+
+## Сессия: s3-intro (8 мая 2026 г.)
+- **Статус DoD:** In Progress
+- **Уровни Блума:** Knowledge (Знание), Comprehension (Понимание), Application (Применение), Analysis (Анализ), Synthesis (Синтез), Evaluation (Оценка)
+- **Рефлексия:** супер
