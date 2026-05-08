@@ -1,0 +1,12 @@
+# Временные файлы Office
+~$*
+*.tmp
+*.bak
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Входящие (рабочая зона, не архив)
+inbox/
