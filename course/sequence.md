@@ -95,3 +95,14 @@ s3-intro → s3-w1-lecture → s3-w1-workshop-setup
 2. Обновить `leads_to` и `related` у смежных узлов
 3. Обновить визуальный граф вверху
 4. Обновить `index.md`
+
+### s3-w2-lecture
+```yaml
+id: s3-w2-lecture
+title: "Контекст-инжиниринг: Строим персональную AI-операционную систему"
+date: 2026-05-07
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
