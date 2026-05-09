@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ai-mindset-tracker
+    env: node
+    region: frankfurt
+    plan: free
+    rootDir: web
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
