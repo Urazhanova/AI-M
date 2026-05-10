@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { UploadCloud, FileText, CheckCircle, AlertCircle, Loader2, Sparkles, BookOpen, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
-type ResultChunk = {
+type CreatedUnit = {
   chunkId: string
   title: string
   type: string
@@ -17,7 +17,7 @@ export default function UploadTranscript() {
   const [file, setFile] = useState<File | null>(null)
   const [chunkIdHint, setChunkIdHint] = useState('')
   const [stage, setStage] = useState<Stage>('idle')
-  const [result, setResult] = useState<ResultChunk | null>(null)
+  const [result, setResult] = useState<CreatedUnit[] | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -53,7 +53,7 @@ export default function UploadTranscript() {
         return
       }
 
-      setResult(data)
+      setResult(Array.isArray(data.units) ? data.units : [])
       setStage('done')
       setFile(null)
       setChunkIdHint('')
@@ -239,39 +239,44 @@ export default function UploadTranscript() {
         )}
 
         {/* Success */}
-        {stage === 'done' && result && (
+        {stage === 'done' && result && result.length > 0 && (
           <div className="space-y-4">
             <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-6">
               <div className="flex items-center mb-4">
                 <CheckCircle className="w-6 h-6 text-emerald-400 mr-3" />
-                <h2 className="font-semibold text-emerald-300 text-lg">Юнит успешно создан!</h2>
+                <h2 className="font-semibold text-emerald-300 text-lg">
+                  {result.length === 1 ? 'Юнит создан!' : `Создано юнитов: ${result.length}`}
+                </h2>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-zinc-950/50 rounded-xl p-4">
-                  <p className="text-xs text-zinc-500 mb-1">ID юнита</p>
-                  <p className="font-mono font-medium text-zinc-200">{result.chunkId}</p>
-                </div>
-                <div className="bg-zinc-950/50 rounded-xl p-4">
-                  <p className="text-xs text-zinc-500 mb-1">Тип</p>
-                  <p className="font-medium text-zinc-200">{typeLabels[result.type] || result.type}</p>
-                </div>
-                <div className="bg-zinc-950/50 rounded-xl p-4 col-span-2">
-                  <p className="text-xs text-zinc-500 mb-1">Название</p>
-                  <p className="font-medium text-zinc-200">{result.title}</p>
-                </div>
+
+              <div className="space-y-3">
+                {result.map((unit) => (
+                  <div key={unit.chunkId} className="bg-zinc-950/50 rounded-xl p-4 border border-zinc-800/50">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-zinc-200">{unit.title}</p>
+                        <p className="font-mono text-xs text-zinc-500 mt-1">{unit.chunkId}</p>
+                      </div>
+                      <span className="text-xs px-2 py-1 rounded-md bg-blue-500/10 text-blue-300 whitespace-nowrap">
+                        {typeLabels[unit.type] || unit.type}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="mt-4 space-y-2 text-sm text-zinc-400">
+
+              <div className="mt-5 space-y-2 text-sm text-zinc-400">
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
-                  <span>Создан файл <code className="text-zinc-300">course/{result.chunkId}/content.md</code></span>
-                </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
-                  <span>Создан файл <code className="text-zinc-300">course/{result.chunkId}/meta.md</code> с вопросами по Блуму</span>
+                  <span>Созданы <code className="text-zinc-300">content.md</code> и <code className="text-zinc-300">meta.md</code> (KSA + DoD + граф) для каждого юнита</span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
                   <span>Обновлён <code className="text-zinc-300">course/sequence.md</code></span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
+                  <span>Юниты добавлены в <code className="text-zinc-300">my-path.md</code> всех студентов</span>
                 </div>
               </div>
             </div>
