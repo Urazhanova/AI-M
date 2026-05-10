@@ -4,9 +4,39 @@ services:
     env: node
     region: frankfurt
     plan: free
+    branch: front
     rootDir: web
     buildCommand: npm install && npm run build
     startCommand: npm run start
+    autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: 20
+        value: "20"
+
+      # ── GitHub: чтение и автокоммиты в репо AI-M ───────────────────────────
+      # Создать токен: https://github.com/settings/tokens?type=beta
+      # Права: contents (read+write) на Urazhanova/AI-M
+      - key: GITHUB_TOKEN
+        sync: false  # secret — задаётся в дашборде Render
+
+      - key: GITHUB_OWNER
+        value: Urazhanova
+
+      - key: GITHUB_REPO
+        value: AI-M
+
+      - key: GITHUB_BRANCH
+        value: front
+
+      # ── Gemini: AI-обработка транскриптов и тьютор ─────────────────────────
+      # Получить ключ: https://aistudio.google.com/apikey
+      - key: GEMINI_API_KEY
+        sync: false  # secret
+
+      # ── Supabase: опционально (auth для куратора через GitHub OAuth) ──────
+      # Если не нужен — оставить незаполненным, build всё равно пройдёт.
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
