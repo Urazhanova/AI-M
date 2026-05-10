@@ -2,7 +2,7 @@ import { BookOpen, Target, CheckCircle, PlayCircle, Clock } from 'lucide-react'
 import Link from 'next/link'
 import PrintButton from '@/components/PrintButton'
 import { getFileContent } from '@/lib/github'
-import { parseSequence } from '@/lib/parsers'
+import { parseSequence, parsePassedFromMyPath } from '@/lib/parsers'
 
 export const dynamic = 'force-dynamic'
 
@@ -53,11 +53,18 @@ export default async function StudentDashboard({ params }: { params: Promise<{ n
   const unitTitleMap = Object.fromEntries(units.map(u => [u.id, u.title]))
 
   const progressRaw = await getFileContent(`students/${name}/progress.md`)
+  const myPathRaw = await getFileContent(`students/${name}/my-path.md`)
   let passedChunks: string[] = []
   let sessions: Session[] = []
 
   if (progressRaw) {
     sessions = parseProgressMd(progressRaw)
+  }
+  // Источник правды для «пройдено» — my-path.md (актуальное состояние пути,
+  // в т.ч. после пересплита монолитов в саб-юниты). progress.md — лог сессий.
+  if (myPathRaw) {
+    passedChunks = parsePassedFromMyPath(myPathRaw)
+  } else if (progressRaw) {
     passedChunks = [...new Set(sessions.map(s => s.chunkId))]
   }
 
