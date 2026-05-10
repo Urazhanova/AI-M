@@ -23,6 +23,9 @@
 | s3-w1-workshop-setup | workshop | ⬜ не начат | — | — |
 | s3-w2-lecture-a | lecture | ⬜ не начат | — | — |
 | s3-w2-lecture-b | lecture | ⬜ не начат | — | — |
+| s3-w1-lecture-1 | lecture | ⬜ не начат | — | — |
+| s3-w1-lecture-2 | lecture | ⬜ не начат | — | — |
+| s3-w1-lecture-3 | lecture | ⬜ не начат | — | — |
 
 ---
 
