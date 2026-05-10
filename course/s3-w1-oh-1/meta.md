@@ -1,7 +1,7 @@
-# meta: s3-w1-lecture-1
+# meta: s3-w1-oh-1
 
 ```yaml
-id: s3-w1-lecture-1
+id: s3-w1-oh-1
 title: "Внедрение AI-инструментов в разработке и мотивация команды"
 session_type: lecture
 date: 2026-05-10
@@ -77,7 +77,7 @@ speaker: "Степан"
 ## Граф связей
 
 ```yaml
-prerequisites: [s3-w1-lecture-core]
+prerequisites: [s3-w1-workshop-setup]
 leads_to: []
 related: []
 ```

@@ -1,7 +1,7 @@
-# meta: s3-w1-lecture-3
+# meta: s3-w1-oh-3
 
 ```yaml
-id: s3-w1-lecture-3
+id: s3-w1-oh-3
 title: "Практики разработки, валидации AI-агентов и стратегические вызовы"
 session_type: lecture
 date: 2026-05-10
@@ -76,7 +76,7 @@ speaker: "Степан"
 ## Граф связей
 
 ```yaml
-prerequisites: [s3-w1-lecture-core]
+prerequisites: [s3-w1-workshop-setup]
 leads_to: []
 related: []
 ```

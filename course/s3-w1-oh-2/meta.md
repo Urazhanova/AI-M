@@ -1,7 +1,7 @@
-# meta: s3-w1-lecture-2
+# meta: s3-w1-oh-2
 
 ```yaml
-id: s3-w1-lecture-2
+id: s3-w1-oh-2
 title: "Управление данными и стратегия масштабирования AI в крупных организациях"
 session_type: lecture
 date: 2026-05-10
@@ -77,7 +77,7 @@ speaker: "Степан"
 ## Граф связей
 
 ```yaml
-prerequisites: [s3-w1-lecture-core]
+prerequisites: [s3-w1-workshop-setup]
 leads_to:
   - s3-w2-lecture-agent-architecture # Углубление в архитектуру агентов после понимания данных
   - s3-w2-lecture-security-compliance # Детальное рассмотрение безопасности и соответствия регуляторам
