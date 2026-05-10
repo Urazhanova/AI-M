@@ -90,7 +90,7 @@ position: 3
 ## Граф связей
 
 ```yaml
-prerequisites: [s3-w1-lecture]
+prerequisites: [s3-w1-lecture-g]
 leads_to: [s3-w1-workshop-setup]
-related: [s3-w1-workshop]
+related: [s3-w1-workshop-c]
 ```

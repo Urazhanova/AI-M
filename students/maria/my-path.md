@@ -7,11 +7,20 @@
 | Чанк | Тип | Статус | Bloom достигнут | DoD |
 |------|-----|--------|-----------------|-----|
 | s3-intro | intro | ✅ пройден | 3 | минимальный |
-| s3-w1-lecture | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-a | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-b | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-c | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-d | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-e | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-f | lecture | ✅ пройден | 2 | минимальный |
+| s3-w1-lecture-g | lecture | ✅ пройден | 2 | минимальный |
 | s3-w1-practical | practical | ✅ пройден | 3 | минимальный |
-| s3-w1-workshop | workshop | ✅ пройден | 3 | полный |
+| s3-w1-workshop-a | workshop | ✅ пройден | 3 | полный |
+| s3-w1-workshop-b | workshop | ✅ пройден | 3 | полный |
+| s3-w1-workshop-c | workshop | ✅ пройден | 3 | полный |
 | s3-w1-workshop-setup | workshop | ⬜ не начат | — | — |
-| s3-w2-lecture | lecture | ⬜ не начат | — | — |
+| s3-w2-lecture-a | lecture | ⬜ не начат | — | — |
+| s3-w2-lecture-b | lecture | ⬜ не начат | — | — |
 
 ---
 

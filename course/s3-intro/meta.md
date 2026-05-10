@@ -76,6 +76,6 @@ position: 1
 
 ```yaml
 prerequisites: []
-leads_to: [s3-w1-lecture]
+leads_to: [s3-w1-lecture-a]
 related: []
 ```
