@@ -11,6 +11,7 @@
 | s3-w1-practical | practical | ✅ пройден | 3 | минимальный |
 | s3-w1-workshop | workshop | ✅ пройден | 2 | минимальный |
 | s3-w1-workshop-setup | workshop | ⬜ не начат | — | — |
+| s3-w2-lecture | lecture | ⬜ не начат | — | — |
 
 ---
 

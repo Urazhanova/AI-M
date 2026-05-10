@@ -13,6 +13,7 @@
 | s3-w1-practical | practical | ⬜ не начат | — | — |
 | s3-w1-workshop | workshop | ⬜ не начат | — | — |
 | s3-w1-workshop-setup | workshop | ⬜ не начат | — | — |
+| s3-w2-lecture | lecture | ⬜ не начат | — | — |
 
 ---
 
