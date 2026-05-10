@@ -1,7 +1,9 @@
 'use client'
 
 import { supabase } from '@/lib/supabase'
-import { Github } from 'lucide-react'
+import { LogIn } from 'lucide-react'
+
+export const dynamic = 'force-dynamic'
 
 export default function LoginPage() {
   const handleLogin = async () => {
@@ -27,7 +29,7 @@ export default function LoginPage() {
             onClick={handleLogin}
             className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-xl text-black bg-white hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 focus:ring-offset-zinc-900 transition-colors"
           >
-            <Github className="w-5 h-5 mr-2" />
+            <LogIn className="w-5 h-5 mr-2" />
             Продолжить с GitHub
           </button>
         </div>
