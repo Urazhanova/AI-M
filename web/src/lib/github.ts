@@ -4,6 +4,9 @@ const owner = process.env.GITHUB_OWNER || "Urazhanova";
 const repo = process.env.GITHUB_REPO || "AI-M";
 const token = process.env.GITHUB_TOKEN;
 
+// Branch для всех чтений и записей. По умолчанию main; в .env.local переопределяется.
+export const branch = process.env.GITHUB_BRANCH || "main";
+
 // Octokit используем ТОЛЬКО для записи (createOrUpdateFileContents)
 export const octokit = new Octokit({ auth: token });
 
@@ -21,7 +24,7 @@ const headers: HeadersInit = {
  */
 export async function getFileContent(path: string): Promise<string | null> {
   try {
-    const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}`;
+    const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}?ref=${encodeURIComponent(branch)}`;
     const res = await fetch(url, {
       headers,
       cache: "no-store", // Next.js не кэширует этот запрос
@@ -47,7 +50,7 @@ export async function getFileContent(path: string): Promise<string | null> {
  */
 export async function getDirectoryContent(path: string) {
   try {
-    const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}`;
+    const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}?ref=${encodeURIComponent(branch)}`;
     const res = await fetch(url, {
       headers,
       cache: "no-store",

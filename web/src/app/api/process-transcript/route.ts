@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { octokit } from '@/lib/github'
+import { octokit, branch } from '@/lib/github'
 
 const owner = process.env.GITHUB_OWNER || 'Urazhanova'
 const repo = process.env.GITHUB_REPO || 'AI-M'
@@ -10,7 +10,7 @@ const repo = process.env.GITHUB_REPO || 'AI-M'
 async function commitFile(path: string, content: string, message: string) {
   let sha: string | undefined
   try {
-    const res = await octokit.rest.repos.getContent({ owner, repo, path })
+    const res = await octokit.rest.repos.getContent({ owner, repo, path, ref: branch })
     if (!Array.isArray(res.data) && res.data.type === 'file') {
       sha = res.data.sha
     }
@@ -25,7 +25,7 @@ async function commitFile(path: string, content: string, message: string) {
     message,
     content: Buffer.from(content).toString('base64'),
     sha,
-    branch: 'main',
+    branch,
   })
 }
 
@@ -344,7 +344,7 @@ related: []
     // ── Step 3: Append all new units to sequence.md ─────────────────────────
     const token = process.env.GITHUB_TOKEN
     const seqRes = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/course/sequence.md`,
+      `https://api.github.com/repos/${owner}/${repo}/contents/course/sequence.md?ref=${encodeURIComponent(branch)}`,
       {
         headers: {
           Accept: 'application/vnd.github+json',
@@ -391,7 +391,7 @@ related: []
     const studentsTouched: string[] = []
     let students: string[] = []
     try {
-      const dirRes = await octokit.rest.repos.getContent({ owner, repo, path: 'students' })
+      const dirRes = await octokit.rest.repos.getContent({ owner, repo, path: 'students', ref: branch })
       if (Array.isArray(dirRes.data)) {
         students = dirRes.data.filter(e => e.type === 'dir').map(e => e.name)
       }
@@ -403,7 +403,7 @@ related: []
       const path = `students/${student}/my-path.md`
       let myPath = ''
       try {
-        const fileRes = await octokit.rest.repos.getContent({ owner, repo, path })
+        const fileRes = await octokit.rest.repos.getContent({ owner, repo, path, ref: branch })
         if (!Array.isArray(fileRes.data) && fileRes.data.type === 'file') {
           myPath = Buffer.from(fileRes.data.content, 'base64').toString('utf-8')
         }

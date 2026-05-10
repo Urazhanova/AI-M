@@ -1,6 +1,6 @@
 'use server'
 
-import { octokit } from '@/lib/github'
+import { octokit, branch } from '@/lib/github'
 import { revalidatePath } from 'next/cache'
 
 const owner = process.env.GITHUB_OWNER || "Urazhanova";
@@ -29,7 +29,7 @@ export async function submitSessionResult(
         owner,
         repo,
         path,
-        ref: 'main' // User requested to commit to main
+        ref: branch,
       })
       
       if (!Array.isArray(response.data) && response.data.type === 'file') {
@@ -61,7 +61,7 @@ export async function submitSessionResult(
       message: `${studentName}: ${chunkId} — ${dodStatus}`,
       content: Buffer.from(updatedContent).toString('base64'),
       sha: sha || undefined,
-      branch: 'main'
+      branch,
     })
     
     // 4. Revalidate cache so the new data is shown immediately
