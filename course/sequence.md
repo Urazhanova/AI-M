@@ -195,3 +195,38 @@ related: []
 ## Как обновлять
 
 Правила см. `docs/lecture-pipeline.md`. yaml-блоки выше регенерируются автоматически из `meta.md` при загрузке/пересплите. Связи (`leads_to`, `related`) задаются в `meta.md` каждого чанка.
+
+### s3-w1-lecture-1
+```yaml
+id: s3-w1-lecture-1
+title: "Внедрение AI-инструментов в разработке и мотивация команды"
+date: 2026-05-10
+type: lecture
+prerequisites: [s3-w1-lecture-core]
+leads_to: []
+related: []
+```
+
+
+### s3-w1-lecture-2
+```yaml
+id: s3-w1-lecture-2
+title: "Управление данными и стратегия масштабирования AI в крупных организациях"
+date: 2026-05-10
+type: lecture
+prerequisites: [s3-w1-lecture-core]
+leads_to: []
+related: []
+```
+
+
+### s3-w1-lecture-3
+```yaml
+id: s3-w1-lecture-3
+title: "Практики разработки, валидации AI-агентов и стратегические вызовы"
+date: 2026-05-10
+type: lecture
+prerequisites: [s3-w1-lecture-core]
+leads_to: []
+related: []
+```
