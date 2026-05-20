@@ -6,46 +6,45 @@ export const dynamic = 'force-dynamic'
 
 export default async function StudentProfile({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params
-  
-  // Попробуем прочитать прогресс студента
+
   const progressContent = await getFileContent(`students/${name}/progress.md`)
-  
-  // Читаем список всех чанков
+
   const courseDir = await getDirectoryContent('course')
   const allChunks = Array.isArray(courseDir) ? courseDir.filter((c: any) => c.type === 'dir').map((c: any) => c.name) : []
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8">
       <header className="mb-10 max-w-6xl mx-auto">
-        <Link href="/" className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-block">
+        <Link href="/curator" className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-block transition-colors">
           ← Назад к дашборду
         </Link>
-        <h1 className="text-4xl font-bold tracking-tight">Профиль: {name}</h1>
-        <p className="text-zinc-400 mt-2 text-lg">AI Mindset Tracker</p>
+        <h1 className="text-4xl font-bold tracking-tight text-[#1A1A1A] capitalize">Профиль: {name}</h1>
+        <p className="text-[#4A4A4A] mt-2 text-lg">AI Mindset Tracker</p>
       </header>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        
+
         {/* Левая колонка */}
         <div className="lg:col-span-2 space-y-8">
-          <section className="bg-zinc-900 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-lg">
-            <div className="p-6 border-b border-zinc-800/80 bg-zinc-900/50">
-              <h2 className="text-xl font-semibold flex items-center">
-                <BookOpen className="w-5 h-5 mr-3 text-emerald-400" />
+          <section className="bg-white border border-[#D9D9D9] rounded-[14px] overflow-hidden bcc-shadow">
+            <div className="p-6 border-b border-[#D9D9D9] bg-[#F5F5F5]">
+              <h2 className="text-xl font-bold flex items-center text-[#1A1A1A]">
+                <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                  <BookOpen className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+                </span>
                 Лог прогресса (progress.md)
               </h2>
             </div>
             <div className="p-6">
               {progressContent ? (
-                <div className="prose prose-invert prose-zinc max-w-none">
-                  {/* Простой вывод текста, но сохраняющий форматирование */}
-                  <pre className="whitespace-pre-wrap font-sans text-sm text-zinc-300 bg-transparent p-0 m-0 border-0">
+                <div className="prose prose-zinc max-w-none">
+                  <pre className="whitespace-pre-wrap font-sans text-sm text-[#1A1A1A] bg-transparent p-0 m-0 border-0">
                     {progressContent}
                   </pre>
                 </div>
               ) : (
-                <div className="text-center p-8 border-2 border-dashed border-zinc-800 rounded-xl">
-                  <p className="text-zinc-500">Файл прогресса пока пуст или не найден.</p>
+                <div className="text-center p-8 border-2 border-dashed border-[#D9D9D9] rounded-[8px]">
+                  <p className="text-[#8C8C8C]">Файл прогресса пока пуст или не найден.</p>
                 </div>
               )}
             </div>
@@ -54,36 +53,37 @@ export default async function StudentProfile({ params }: { params: Promise<{ nam
 
         {/* Правая колонка */}
         <div className="space-y-8">
-          <section className="bg-zinc-900 border border-zinc-800/80 rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-zinc-800/80 bg-zinc-900/50">
-              <h2 className="text-xl font-semibold flex items-center">
-                <ActivityIcon className="w-5 h-5 mr-3 text-blue-400" />
+          <section className="bg-white border border-[#D9D9D9] rounded-[14px] bcc-shadow overflow-hidden">
+            <div className="p-6 border-b border-[#D9D9D9] bg-[#F5F5F5]">
+              <h2 className="text-xl font-bold flex items-center text-[#1A1A1A]">
+                <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                  <ActivityIcon className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+                </span>
                 Учебные сессии
               </h2>
             </div>
             <div className="p-4">
               <ul className="space-y-3">
                 {allChunks.map((chunk) => {
-                  // Очень примитивная проверка пройден ли чанк (поиск по логу)
                   const isCompleted = progressContent && progressContent.includes(`Сессия: ${chunk}`) && progressContent.includes('Completed')
-                  
+
                   return (
-                    <li key={chunk} className="flex flex-col p-3 bg-zinc-950/50 rounded-xl border border-zinc-800/50">
+                    <li key={chunk} className="flex flex-col p-3 bg-[#F5F5F5] rounded-[8px] border border-[#D9D9D9]">
                       <div className="flex justify-between items-center mb-2">
                         <div className="flex items-center">
                           {isCompleted ? (
-                            <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0" />
+                            <CheckCircle className="w-4 h-4 text-[#00A859] mr-2 flex-shrink-0" strokeWidth={2} />
                           ) : (
-                            <Clock className="w-4 h-4 text-zinc-600 mr-2 flex-shrink-0" />
+                            <Clock className="w-4 h-4 text-[#8C8C8C] mr-2 flex-shrink-0" strokeWidth={1.75} />
                           )}
-                          <span className={`font-mono text-sm ${isCompleted ? 'text-zinc-300' : 'text-zinc-400'}`}>{chunk}</span>
+                          <span className={`font-mono text-sm ${isCompleted ? 'text-[#007A40] font-semibold' : 'text-[#4A4A4A]'}`}>{chunk}</span>
                         </div>
                       </div>
-                      <Link 
+                      <Link
                         href={`/curator/session/${name}/${chunk}`}
-                        className="flex items-center justify-center w-full py-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 text-xs font-medium rounded-lg transition-colors border border-blue-500/20"
+                        className="flex items-center justify-center w-full py-2 bg-[#00A859] hover:bg-[#007A40] text-white text-xs font-semibold rounded-[8px] transition-colors"
                       >
-                        <Play className="w-3 h-3 mr-1.5" />
+                        <Play className="w-3 h-3 mr-1.5" strokeWidth={2} />
                         Провести сессию
                       </Link>
                     </li>
@@ -91,18 +91,20 @@ export default async function StudentProfile({ params }: { params: Promise<{ nam
                 })}
               </ul>
               {allChunks.length === 0 && (
-                <p className="text-zinc-500 text-sm text-center">Чанки не найдены.</p>
+                <p className="text-[#8C8C8C] text-sm text-center">Чанки не найдены.</p>
               )}
             </div>
           </section>
 
-          <section className="bg-zinc-900 border border-zinc-800/80 rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-6 flex items-center">
-              <BrainCircuit className="w-5 h-5 mr-3 text-purple-400" />
+          <section className="bg-white border border-[#D9D9D9] rounded-[14px] bcc-shadow p-6">
+            <h2 className="text-xl font-bold mb-6 flex items-center text-[#1A1A1A]">
+              <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                <BrainCircuit className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+              </span>
               Mindset статусы
             </h2>
             <div className="space-y-4">
-              <div className="text-sm text-zinc-400 pb-2 border-b border-zinc-800">
+              <div className="text-sm text-[#4A4A4A] pb-2 border-b border-[#D9D9D9]">
                 Полная карта сдвигов доступна на Дашборде.
               </div>
             </div>
@@ -124,7 +126,7 @@ function ActivityIcon(props: any) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth={props.strokeWidth ?? 2}
       strokeLinecap="round"
       strokeLinejoin="round"
     >

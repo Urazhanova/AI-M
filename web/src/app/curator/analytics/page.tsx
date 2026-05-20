@@ -1,19 +1,16 @@
 import { getFileContent, getDirectoryContent } from '@/lib/github'
 import { parseMindsetMap } from '@/lib/parsers'
 import Link from 'next/link'
-import { Download, Users, Brain, Activity } from 'lucide-react'
+import { Users, Brain, Activity } from 'lucide-react'
 
-// Simple client component for the print button
 import PrintButton from '@/components/PrintButton'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AnalyticsPage() {
-  // Fetch data
   const mindsetRaw = await getFileContent('mindset-map.md')
   const shifts = mindsetRaw ? parseMindsetMap(mindsetRaw) : []
-  
-  // Calculate basic stats for mindset
+
   let seeded = 0
   let emerging = 0
   let internalized = 0
@@ -29,65 +26,74 @@ export default async function AnalyticsPage() {
     })
   })
 
-  // Students count
   const studentsDir = await getDirectoryContent('students')
   const students = Array.isArray(studentsDir) ? studentsDir.filter((c: any) => c.type === 'dir') : []
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8 print:bg-white print:text-black">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8 print:bg-white">
       <header className="mb-10 max-w-6xl mx-auto flex justify-between items-start">
         <div>
-          <Link href="/curator" className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-block no-print">
+          <Link href="/curator" className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-block no-print transition-colors">
             ← Назад к дашборду
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight">Аналитика Когорты</h1>
-          <p className="text-zinc-400 mt-2 print:text-zinc-600">Отчет по прогрессу и Mindset-сдвигам</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E6F7EE] text-[#00A859] rounded-full text-xs font-semibold uppercase tracking-wider mb-3 no-print">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00A859]"></span>
+            Отчёт когорты
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight text-[#1A1A1A]">Аналитика когорты</h1>
+          <p className="text-[#4A4A4A] mt-2">Отчёт по прогрессу и Mindset-сдвигам</p>
         </div>
         <PrintButton />
       </header>
 
       <div className="max-w-6xl mx-auto space-y-8">
-        
+
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg print:border-zinc-300 print:shadow-none">
+          <div className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-zinc-400 print:text-zinc-600">Всего студентов</h3>
-              <Users className="w-5 h-5 text-blue-400 print:text-blue-600" />
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C8C8C]">Всего студентов</h3>
+              <div className="w-10 h-10 bg-[#E6F7EE] rounded-full flex items-center justify-center">
+                <Users className="w-5 h-5 text-[#00A859]" strokeWidth={1.5} />
+              </div>
             </div>
-            <p className="text-4xl font-bold">{students.length}</p>
-          </div>
-          
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg print:border-zinc-300 print:shadow-none">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-zinc-400 print:text-zinc-600">Всего сдвигов</h3>
-              <Brain className="w-5 h-5 text-purple-400 print:text-purple-600" />
-            </div>
-            <p className="text-4xl font-bold">{shifts.length}</p>
+            <p className="text-5xl font-bold text-[#1A1A1A]">{students.length}</p>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg print:border-zinc-300 print:shadow-none">
+          <div className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-zinc-400 print:text-zinc-600">Активность (сессии)</h3>
-              <Activity className="w-5 h-5 text-emerald-400 print:text-emerald-600" />
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C8C8C]">Всего сдвигов</h3>
+              <div className="w-10 h-10 bg-[#E6F7EE] rounded-full flex items-center justify-center">
+                <Brain className="w-5 h-5 text-[#00A859]" strokeWidth={1.5} />
+              </div>
             </div>
-            <p className="text-4xl font-bold">{totalStatuses}</p>
+            <p className="text-5xl font-bold text-[#1A1A1A]">{shifts.length}</p>
+          </div>
+
+          <div className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C8C8C]">Активность (сессии)</h3>
+              <div className="w-10 h-10 bg-[#E6F7EE] rounded-full flex items-center justify-center">
+                <Activity className="w-5 h-5 text-[#00A859]" strokeWidth={1.5} />
+              </div>
+            </div>
+            <p className="text-5xl font-bold text-[#1A1A1A]">{totalStatuses}</p>
           </div>
         </div>
 
         {/* Mindset Distribution */}
-        <section className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg print:border-zinc-300 print:shadow-none">
-          <h2 className="text-xl font-semibold mb-6">Распределение статусов Mindset</h2>
-          
+        <section className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow">
+          <h2 className="text-xl font-bold mb-6 text-[#1A1A1A]">Распределение статусов Mindset</h2>
+
           <div className="space-y-6">
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-emerald-400 font-medium">Seeded ({seeded})</span>
-                <span className="text-zinc-400">{totalStatuses > 0 ? Math.round((seeded/totalStatuses)*100) : 0}%</span>
+                <span className="text-[#007A40] font-semibold">Seeded ({seeded})</span>
+                <span className="text-[#8C8C8C] font-medium">{totalStatuses > 0 ? Math.round((seeded/totalStatuses)*100) : 0}%</span>
               </div>
-              <div className="w-full h-3 bg-zinc-950 rounded-full overflow-hidden print:bg-zinc-200">
-                <div 
-                  className="h-full bg-emerald-500" 
+              <div className="w-full h-3 bg-[#F5F5F5] rounded-full overflow-hidden border border-[#D9D9D9]">
+                <div
+                  className="h-full bg-[#00A859]"
                   style={{ width: `${totalStatuses > 0 ? (seeded/totalStatuses)*100 : 0}%` }}
                 ></div>
               </div>
@@ -95,12 +101,12 @@ export default async function AnalyticsPage() {
 
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-blue-400 font-medium">Emerging ({emerging})</span>
-                <span className="text-zinc-400">{totalStatuses > 0 ? Math.round((emerging/totalStatuses)*100) : 0}%</span>
+                <span className="text-[#1F6FEB] font-semibold">Emerging ({emerging})</span>
+                <span className="text-[#8C8C8C] font-medium">{totalStatuses > 0 ? Math.round((emerging/totalStatuses)*100) : 0}%</span>
               </div>
-              <div className="w-full h-3 bg-zinc-950 rounded-full overflow-hidden print:bg-zinc-200">
-                <div 
-                  className="h-full bg-blue-500" 
+              <div className="w-full h-3 bg-[#F5F5F5] rounded-full overflow-hidden border border-[#D9D9D9]">
+                <div
+                  className="h-full bg-[#1F6FEB]"
                   style={{ width: `${totalStatuses > 0 ? (emerging/totalStatuses)*100 : 0}%` }}
                 ></div>
               </div>
@@ -108,12 +114,12 @@ export default async function AnalyticsPage() {
 
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span className="text-purple-400 font-medium">Internalized ({internalized})</span>
-                <span className="text-zinc-400">{totalStatuses > 0 ? Math.round((internalized/totalStatuses)*100) : 0}%</span>
+                <span className="text-[#0FB5BA] font-semibold">Internalized ({internalized})</span>
+                <span className="text-[#8C8C8C] font-medium">{totalStatuses > 0 ? Math.round((internalized/totalStatuses)*100) : 0}%</span>
               </div>
-              <div className="w-full h-3 bg-zinc-950 rounded-full overflow-hidden print:bg-zinc-200">
-                <div 
-                  className="h-full bg-purple-500" 
+              <div className="w-full h-3 bg-[#F5F5F5] rounded-full overflow-hidden border border-[#D9D9D9]">
+                <div
+                  className="h-full bg-[#0FB5BA]"
                   style={{ width: `${totalStatuses > 0 ? (internalized/totalStatuses)*100 : 0}%` }}
                 ></div>
               </div>

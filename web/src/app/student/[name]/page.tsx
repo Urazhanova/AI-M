@@ -60,8 +60,6 @@ export default async function StudentDashboard({ params }: { params: Promise<{ n
   if (progressRaw) {
     sessions = parseProgressMd(progressRaw)
   }
-  // Источник правды для «пройдено» — my-path.md (актуальное состояние пути,
-  // в т.ч. после пересплита монолитов в саб-юниты). progress.md — лог сессий.
   if (myPathRaw) {
     passedChunks = parsePassedFromMyPath(myPathRaw)
   } else if (progressRaw) {
@@ -72,39 +70,45 @@ export default async function StudentDashboard({ params }: { params: Promise<{ n
 
   const dodColor = (dod: string) => {
     const d = dod.toLowerCase()
-    if (d.includes('completed') || d.includes('полный')) return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-    if (d.includes('progress') || d.includes('минимальный')) return 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-    return 'bg-zinc-700/50 text-zinc-400 border-zinc-700'
+    if (d.includes('completed') || d.includes('полный')) return 'bg-[#E6F7EE] text-[#007A40] border-[#00A859]/30'
+    if (d.includes('progress') || d.includes('минимальный')) return 'bg-[#FFF4E0] text-[#A06A14] border-[#E8A76A]/40'
+    return 'bg-[#F5F5F5] text-[#4A4A4A] border-[#D9D9D9]'
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8">
       <header className="mb-10 max-w-4xl mx-auto flex justify-between items-start">
         <div>
-          <Link href="/student" className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-block no-print">
+          <Link href="/student" className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-block no-print transition-colors">
             ← Назад к выбору профиля
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-100 to-blue-400 bg-clip-text text-transparent">Привет, {studentDisplayName}!</h1>
-          <p className="text-zinc-400 mt-2 text-lg print:text-zinc-600">AI Mindset Tracker</p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E6F7EE] text-[#00A859] rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00A859]"></span>
+            BCC University
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight text-[#1A1A1A]">Привет, {studentDisplayName}!</h1>
+          <p className="text-[#4A4A4A] mt-2 text-lg">AI Mindset Tracker</p>
         </div>
         <PrintButton />
       </header>
 
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Progress summary */}
-        <div className="bg-zinc-900 border border-zinc-800/80 p-6 rounded-2xl shadow-lg">
-          <h2 className="text-xl font-semibold mb-6 flex items-center">
-            <Target className="w-5 h-5 mr-3 text-blue-400" />
+        <div className="bg-white border border-[#D9D9D9] p-6 rounded-[14px] bcc-shadow">
+          <h2 className="text-xl font-bold mb-6 flex items-center text-[#1A1A1A]">
+            <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+              <Target className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+            </span>
             Твой прогресс
           </h2>
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 p-5 bg-zinc-950/50 rounded-xl border border-zinc-800/50">
-              <p className="text-sm text-zinc-400 mb-1">Пройдено чанков</p>
-              <p className="text-3xl font-bold">{passedChunks.length} <span className="text-lg text-zinc-500 font-normal">/ {units.length}</span></p>
+            <div className="flex-1 p-5 bg-[#F5F5F5] rounded-[8px] border border-[#D9D9D9]">
+              <p className="text-xs uppercase tracking-wider font-semibold text-[#8C8C8C] mb-2">Пройдено чанков</p>
+              <p className="text-4xl font-bold text-[#1A1A1A]">{passedChunks.length} <span className="text-lg text-[#8C8C8C] font-normal">/ {units.length}</span></p>
             </div>
-            <div className="flex-1 p-5 bg-zinc-950/50 rounded-xl border border-zinc-800/50">
-              <p className="text-sm text-zinc-400 mb-1">Следующий шаг</p>
-              <p className="text-lg font-medium text-blue-400">
+            <div className="flex-1 p-5 bg-[#F5F5F5] rounded-[8px] border border-[#D9D9D9]">
+              <p className="text-xs uppercase tracking-wider font-semibold text-[#8C8C8C] mb-2">Следующий шаг</p>
+              <p className="text-lg font-semibold text-[#00A859]">
                 {units.find(u => !passedChunks.includes(u.id))?.title || "Всё пройдено!"}
               </p>
             </div>
@@ -112,28 +116,30 @@ export default async function StudentDashboard({ params }: { params: Promise<{ n
         </div>
 
         {/* Timeline */}
-        <section className="bg-zinc-900 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-lg no-print">
-          <div className="p-6 border-b border-zinc-800/80 bg-zinc-900/50">
-            <h2 className="text-xl font-semibold flex items-center">
-              <PlayCircle className="w-5 h-5 mr-3 text-blue-400" />
+        <section className="bg-white border border-[#D9D9D9] rounded-[14px] overflow-hidden bcc-shadow no-print">
+          <div className="p-6 border-b border-[#D9D9D9] bg-[#F5F5F5]">
+            <h2 className="text-xl font-bold flex items-center text-[#1A1A1A]">
+              <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                <PlayCircle className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+              </span>
               Твой учебный план
             </h2>
           </div>
           <div className="p-6">
-            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-zinc-800 before:to-transparent">
+            <div className="space-y-4 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#D9D9D9] before:to-transparent">
               {units.map((unit, idx) => {
                 const isPassed = passedChunks.includes(unit.id)
                 return (
                   <div key={unit.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-zinc-900 ${isPassed ? 'bg-emerald-500 text-white' : 'bg-zinc-800 text-zinc-500'} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow z-10`}>
-                      {isPassed ? <CheckCircle className="w-5 h-5" /> : <span>{idx + 1}</span>}
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white ${isPassed ? 'bg-[#00A859] text-white' : 'bg-[#F5F5F5] text-[#8C8C8C] border border-[#D9D9D9]'} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-semibold`}>
+                      {isPassed ? <CheckCircle className="w-5 h-5" strokeWidth={2} /> : <span>{idx + 1}</span>}
                     </div>
-                    <Link href={`/student/${name}/unit/${unit.id}`} className={`w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border ${isPassed ? 'bg-emerald-500/5 border-emerald-500/20' : 'bg-zinc-950/50 border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-800/50'} transition-colors`}>
+                    <Link href={`/student/${name}/unit/${unit.id}`} className={`w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-[8px] border transition-colors ${isPassed ? 'bg-[#E6F7EE] border-[#00A859]/30 hover:border-[#00A859]' : 'bg-[#F5F5F5] border-[#D9D9D9] hover:border-[#00A859] hover:bg-white'}`}>
                       <div className="flex justify-between items-start">
-                        <h3 className={`font-medium ${isPassed ? 'text-emerald-400' : 'text-zinc-200 group-hover:text-blue-400'}`}>{unit.title}</h3>
-                        <span className="text-xs bg-zinc-800 px-2 py-1 rounded text-zinc-400">{unit.type}</span>
+                        <h3 className={`font-semibold ${isPassed ? 'text-[#007A40]' : 'text-[#1A1A1A] group-hover:text-[#00A859]'}`}>{unit.title}</h3>
+                        <span className="text-xs bg-white border border-[#D9D9D9] px-2 py-1 rounded text-[#4A4A4A] font-medium">{unit.type}</span>
                       </div>
-                      <p className="text-sm text-zinc-500 mt-2 font-mono">{unit.id}</p>
+                      <p className="text-xs text-[#8C8C8C] mt-2 font-mono">{unit.id}</p>
                     </Link>
                   </div>
                 )
@@ -143,42 +149,44 @@ export default async function StudentDashboard({ params }: { params: Promise<{ n
         </section>
 
         {/* Session history */}
-        <section className="bg-zinc-900 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-lg">
-          <div className="p-6 border-b border-zinc-800/80 bg-zinc-900/50">
-            <h2 className="text-xl font-semibold flex items-center">
-              <BookOpen className="w-5 h-5 mr-3 text-emerald-400" />
+        <section className="bg-white border border-[#D9D9D9] rounded-[14px] overflow-hidden bcc-shadow">
+          <div className="p-6 border-b border-[#D9D9D9] bg-[#F5F5F5]">
+            <h2 className="text-xl font-bold flex items-center text-[#1A1A1A]">
+              <span className="w-9 h-9 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                <BookOpen className="w-5 h-5 text-[#00A859]" strokeWidth={1.75} />
+              </span>
               История сессий
             </h2>
           </div>
           <div className="p-0">
             {sessions.length === 0 ? (
-              <div className="p-8 text-center text-zinc-500">
-                <Clock className="w-8 h-8 mx-auto mb-2 opacity-40" />
+              <div className="p-8 text-center text-[#8C8C8C]">
+                <Clock className="w-8 h-8 mx-auto mb-2 opacity-40" strokeWidth={1.5} />
                 <p>Сессий пока нет. Начни первый юнит!</p>
               </div>
             ) : (
-              <ul className="divide-y divide-zinc-800/50">
+              <ul className="divide-y divide-[#D9D9D9]">
                 {sessions.map((session, idx) => (
-                  <li key={idx} className="p-6 hover:bg-zinc-800/30 transition-colors">
+                  <li key={idx} className="p-6 hover:bg-[#F5F5F5] transition-colors">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="font-medium text-lg text-zinc-200">
+                        <h3 className="font-semibold text-lg text-[#1A1A1A]">
                           {unitTitleMap[session.chunkId] || session.chunkId}
                         </h3>
-                        <p className="text-xs font-mono text-zinc-600 mt-0.5">{session.chunkId}</p>
-                        <p className="text-sm text-zinc-500 mt-1">{session.date}</p>
+                        <p className="text-xs font-mono text-[#8C8C8C] mt-0.5">{session.chunkId}</p>
+                        <p className="text-sm text-[#4A4A4A] mt-1">{session.date}</p>
                       </div>
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${dodColor(session.dod)}`}>
-                        <CheckCircle className="w-3 h-3 mr-1" />
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${dodColor(session.dod)}`}>
+                        <CheckCircle className="w-3 h-3 mr-1" strokeWidth={2} />
                         {session.dod}
                       </span>
                     </div>
                     {session.bloomLevels && (
-                      <p className="text-xs text-zinc-500 mb-3">Уровни Блума: {session.bloomLevels}</p>
+                      <p className="text-xs text-[#8C8C8C] mb-3">Уровни Блума: <span className="text-[#4A4A4A] font-medium">{session.bloomLevels}</span></p>
                     )}
                     {session.reflection && (
-                      <div className="p-4 bg-zinc-950 rounded-xl border border-zinc-800/80">
-                        <p className="text-sm text-zinc-300 italic">«{session.reflection}»</p>
+                      <div className="p-4 bg-[#F5F5F5] rounded-[8px] border border-[#D9D9D9]">
+                        <p className="text-sm text-[#1A1A1A] italic">«{session.reflection}»</p>
                       </div>
                     )}
                   </li>

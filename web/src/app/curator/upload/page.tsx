@@ -79,19 +79,19 @@ export default function UploadTranscript() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8">
       <header className="mb-10 max-w-3xl mx-auto">
-        <Link href="/curator" className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-flex items-center">
-          <ArrowLeft className="w-4 h-4 mr-1" />
+        <Link href="/curator" className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-flex items-center transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-1" strokeWidth={1.75} />
           Назад к дашборду
         </Link>
         <div className="flex items-center mt-2">
-          <div className="p-3 bg-blue-500/10 rounded-xl mr-4">
-            <Sparkles className="w-7 h-7 text-blue-400" />
+          <div className="w-14 h-14 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-4">
+            <Sparkles className="w-7 h-7 text-[#00A859]" strokeWidth={1.5} />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">AI-Обработка транскрипта</h1>
-            <p className="text-zinc-400 mt-1">Gemini разобьёт материал на юниты и добавит их в учебный план</p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#1A1A1A]">AI-Обработка транскрипта</h1>
+            <p className="text-[#4A4A4A] mt-1">Gemini разобьёт материал на юниты и добавит их в учебный план</p>
           </div>
         </div>
       </header>
@@ -99,8 +99,8 @@ export default function UploadTranscript() {
       <div className="max-w-3xl mx-auto space-y-6">
 
         {/* How it works */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase mb-4">Как это работает</h2>
+        <div className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow">
+          <h2 className="text-xs font-semibold text-[#8C8C8C] uppercase tracking-wider mb-4">Как это работает</h2>
           <div className="grid grid-cols-3 gap-4">
             {[
               { step: '1', label: 'Загружаете транскрипт', desc: '.txt или .md файл с текстом лекции/практики' },
@@ -108,11 +108,11 @@ export default function UploadTranscript() {
               { step: '3', label: 'Появляется в системе', desc: 'Юнит добавляется в GitHub и учебный план студентов' },
             ].map(({ step, label, desc }) => (
               <div key={step} className="text-center">
-                <div className="w-8 h-8 rounded-full bg-blue-600/20 text-blue-400 font-bold flex items-center justify-center mx-auto mb-2 text-sm">
+                <div className="w-9 h-9 rounded-full bg-[#E6F7EE] text-[#00A859] font-bold flex items-center justify-center mx-auto mb-2 text-sm">
                   {step}
                 </div>
-                <p className="font-medium text-sm text-zinc-200">{label}</p>
-                <p className="text-xs text-zinc-500 mt-1">{desc}</p>
+                <p className="font-semibold text-sm text-[#1A1A1A]">{label}</p>
+                <p className="text-xs text-[#8C8C8C] mt-1">{desc}</p>
               </div>
             ))}
           </div>
@@ -124,29 +124,29 @@ export default function UploadTranscript() {
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="border-2 border-dashed border-zinc-700 hover:border-blue-500/50 bg-zinc-900/50 rounded-2xl p-12 text-center transition-colors"
+              className="border-2 border-dashed border-[#D9D9D9] hover:border-[#00A859] bg-white rounded-[14px] p-12 text-center transition-colors bcc-shadow"
             >
               {file ? (
                 <div className="flex flex-col items-center">
-                  <div className="p-4 bg-blue-500/10 rounded-full mb-4">
-                    <FileText className="w-10 h-10 text-blue-400" />
+                  <div className="w-16 h-16 bg-[#E6F7EE] rounded-full flex items-center justify-center mb-4">
+                    <FileText className="w-8 h-8 text-[#00A859]" strokeWidth={1.5} />
                   </div>
-                  <p className="font-medium text-lg text-zinc-200">{file.name}</p>
-                  <p className="text-sm text-zinc-500 mt-1">{(file.size / 1024).toFixed(1)} KB</p>
+                  <p className="font-semibold text-lg text-[#1A1A1A]">{file.name}</p>
+                  <p className="text-sm text-[#8C8C8C] mt-1">{(file.size / 1024).toFixed(1)} KB</p>
                   <button
                     onClick={() => setFile(null)}
-                    className="mt-4 text-sm text-red-400 hover:text-red-300"
+                    className="mt-4 text-sm text-[#9B1D27] hover:underline font-medium"
                   >
                     Удалить
                   </button>
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
-                  <div className="p-4 bg-zinc-800 rounded-full mb-4">
-                    <UploadCloud className="w-10 h-10 text-zinc-400" />
+                  <div className="w-16 h-16 bg-[#F5F5F5] rounded-full flex items-center justify-center mb-4">
+                    <UploadCloud className="w-8 h-8 text-[#8C8C8C]" strokeWidth={1.5} />
                   </div>
-                  <p className="text-lg font-medium text-zinc-300 mb-2">Перетащите файл сюда</p>
-                  <p className="text-sm text-zinc-500 mb-6">или нажмите для выбора файла (.txt, .md)</p>
+                  <p className="text-lg font-semibold text-[#1A1A1A] mb-2">Перетащите файл сюда</p>
+                  <p className="text-sm text-[#8C8C8C] mb-6">или нажмите для выбора файла (.txt, .md)</p>
                   <input
                     type="file"
                     accept=".txt,.md"
@@ -156,7 +156,7 @@ export default function UploadTranscript() {
                   />
                   <label
                     htmlFor="file-upload"
-                    className="px-6 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl font-medium transition-colors cursor-pointer"
+                    className="px-6 py-2.5 bg-[#F5F5F5] hover:bg-[#E6F7EE] text-[#1A1A1A] rounded-[8px] font-semibold transition-colors cursor-pointer border border-[#D9D9D9]"
                   >
                     Выбрать файл
                   </label>
@@ -165,8 +165,8 @@ export default function UploadTranscript() {
             </div>
 
             {/* Optional chunk ID hint */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
-              <label className="block text-sm font-medium text-zinc-400 mb-2">
+            <div className="bg-white border border-[#D9D9D9] rounded-[14px] p-5 bcc-shadow">
+              <label className="block text-sm font-semibold text-[#1A1A1A] mb-2">
                 ID юнита (необязательно)
               </label>
               <input
@@ -174,9 +174,9 @@ export default function UploadTranscript() {
                 value={chunkIdHint}
                 onChange={(e) => setChunkIdHint(e.target.value)}
                 placeholder="например: s3-w2-lecture"
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-xl py-2.5 px-4 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-blue-500/50"
+                className="w-full bg-[#F5F5F5] border border-[#D9D9D9] rounded-[8px] py-2.5 px-4 text-sm text-[#1A1A1A] placeholder-[#8C8C8C] focus:outline-none focus:border-[#00A859] focus:ring-1 focus:ring-[#00A859]"
               />
-              <p className="text-xs text-zinc-600 mt-2">Если оставить пустым — Gemini сгенерирует ID автоматически</p>
+              <p className="text-xs text-[#8C8C8C] mt-2">Если оставить пустым — Gemini сгенерирует ID автоматически</p>
             </div>
 
             {/* Process button */}
@@ -184,20 +184,20 @@ export default function UploadTranscript() {
               <button
                 onClick={handleUpload}
                 disabled={!file || stage === 'processing' || stage === 'uploading'}
-                className={`px-8 py-3 rounded-xl font-medium transition-all flex items-center shadow-lg ${
+                className={`px-8 py-3 rounded-[8px] font-semibold transition-all flex items-center ${
                   !file || stage !== 'idle'
-                    ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/20'
+                    ? 'bg-[#D9D9D9] text-[#8C8C8C] cursor-not-allowed'
+                    : 'bg-[#00A859] hover:bg-[#007A40] text-white bcc-shadow'
                 }`}
               >
                 {stage === 'uploading' || stage === 'processing' ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" strokeWidth={2} />
                     {stage === 'uploading' ? 'Загрузка...' : 'Gemini обрабатывает...'}
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5 mr-2" />
+                    <Sparkles className="w-5 h-5 mr-2" strokeWidth={1.75} />
                     Обработать с помощью AI
                   </>
                 )}
@@ -206,18 +206,18 @@ export default function UploadTranscript() {
 
             {/* Processing indicator */}
             {stage === 'processing' && (
-              <div className="bg-blue-500/5 border border-blue-500/20 rounded-2xl p-6">
+              <div className="bg-[#E6F7EE] border border-[#00A859]/30 rounded-[14px] p-6">
                 <div className="flex items-center">
-                  <Loader2 className="w-5 h-5 text-blue-400 animate-spin mr-3" />
+                  <Loader2 className="w-5 h-5 text-[#00A859] animate-spin mr-3" strokeWidth={2} />
                   <div>
-                    <p className="font-medium text-blue-300">Gemini анализирует транскрипт...</p>
-                    <p className="text-sm text-zinc-500 mt-1">Это может занять 20–40 секунд. Не закрывайте страницу.</p>
+                    <p className="font-semibold text-[#007A40]">Gemini анализирует транскрипт...</p>
+                    <p className="text-sm text-[#4A4A4A] mt-1">Это может занять 20–40 секунд. Не закрывайте страницу.</p>
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
                   {['Читаем транскрипт', 'Структурируем учебный материал', 'Генерируем вопросы по Блуму', 'Коммитим в GitHub'].map((step, i) => (
-                    <div key={i} className="flex items-center text-sm text-zinc-500">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500/50 mr-2 animate-pulse" />
+                    <div key={i} className="flex items-center text-sm text-[#4A4A4A]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#00A859] mr-2 animate-pulse" />
                       {step}
                     </div>
                   ))}
@@ -227,11 +227,11 @@ export default function UploadTranscript() {
 
             {/* Error */}
             {stage === 'error' && (
-              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start text-red-400">
-                <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" />
+              <div className="p-4 bg-[#9B1D27]/10 border border-[#9B1D27]/30 rounded-[8px] flex items-start text-[#9B1D27]">
+                <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
                 <div>
-                  <p className="font-medium">Ошибка при обработке</p>
-                  <p className="text-sm mt-1 text-red-400/80">{errorMsg}</p>
+                  <p className="font-semibold">Ошибка при обработке</p>
+                  <p className="text-sm mt-1 text-[#9B1D27]/80">{errorMsg}</p>
                 </div>
               </div>
             )}
@@ -241,23 +241,23 @@ export default function UploadTranscript() {
         {/* Success */}
         {stage === 'done' && result && result.length > 0 && (
           <div className="space-y-4">
-            <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-6">
+            <div className="bg-[#E6F7EE] border border-[#00A859]/30 rounded-[14px] p-6">
               <div className="flex items-center mb-4">
-                <CheckCircle className="w-6 h-6 text-emerald-400 mr-3" />
-                <h2 className="font-semibold text-emerald-300 text-lg">
+                <CheckCircle className="w-6 h-6 text-[#00A859] mr-3" strokeWidth={1.75} />
+                <h2 className="font-bold text-[#007A40] text-lg">
                   {result.length === 1 ? 'Юнит создан!' : `Создано юнитов: ${result.length}`}
                 </h2>
               </div>
 
               <div className="space-y-3">
                 {result.map((unit) => (
-                  <div key={unit.chunkId} className="bg-zinc-950/50 rounded-xl p-4 border border-zinc-800/50">
+                  <div key={unit.chunkId} className="bg-white rounded-[8px] p-4 border border-[#D9D9D9]">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0 flex-1">
-                        <p className="font-medium text-zinc-200">{unit.title}</p>
-                        <p className="font-mono text-xs text-zinc-500 mt-1">{unit.chunkId}</p>
+                        <p className="font-semibold text-[#1A1A1A]">{unit.title}</p>
+                        <p className="font-mono text-xs text-[#8C8C8C] mt-1">{unit.chunkId}</p>
                       </div>
-                      <span className="text-xs px-2 py-1 rounded-md bg-blue-500/10 text-blue-300 whitespace-nowrap">
+                      <span className="text-xs px-2 py-1 rounded bg-[#E6F7EE] text-[#007A40] whitespace-nowrap font-semibold border border-[#00A859]/20">
                         {typeLabels[unit.type] || unit.type}
                       </span>
                     </div>
@@ -265,18 +265,18 @@ export default function UploadTranscript() {
                 ))}
               </div>
 
-              <div className="mt-5 space-y-2 text-sm text-zinc-400">
+              <div className="mt-5 space-y-2 text-sm text-[#4A4A4A]">
                 <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
-                  <span>Созданы <code className="text-zinc-300">content.md</code> и <code className="text-zinc-300">meta.md</code> (KSA + DoD + граф) для каждого юнита</span>
+                  <CheckCircle className="w-4 h-4 text-[#00A859] mr-2" strokeWidth={1.75} />
+                  <span>Созданы <code className="text-[#1A1A1A] bg-white px-1 rounded">content.md</code> и <code className="text-[#1A1A1A] bg-white px-1 rounded">meta.md</code> для каждого юнита</span>
                 </div>
                 <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
-                  <span>Обновлён <code className="text-zinc-300">course/sequence.md</code></span>
+                  <CheckCircle className="w-4 h-4 text-[#00A859] mr-2" strokeWidth={1.75} />
+                  <span>Обновлён <code className="text-[#1A1A1A] bg-white px-1 rounded">course/sequence.md</code></span>
                 </div>
                 <div className="flex items-center">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 mr-2" />
-                  <span>Юниты добавлены в <code className="text-zinc-300">my-path.md</code> всех студентов</span>
+                  <CheckCircle className="w-4 h-4 text-[#00A859] mr-2" strokeWidth={1.75} />
+                  <span>Юниты добавлены в <code className="text-[#1A1A1A] bg-white px-1 rounded">my-path.md</code> всех студентов</span>
                 </div>
               </div>
             </div>
@@ -284,16 +284,16 @@ export default function UploadTranscript() {
             <div className="flex gap-4">
               <button
                 onClick={resetForm}
-                className="flex-1 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl font-medium transition-colors flex items-center justify-center"
+                className="flex-1 py-3 bg-white hover:bg-[#F5F5F5] text-[#1A1A1A] rounded-[8px] font-semibold transition-colors flex items-center justify-center border border-[#D9D9D9]"
               >
-                <UploadCloud className="w-4 h-4 mr-2" />
+                <UploadCloud className="w-4 h-4 mr-2" strokeWidth={1.75} />
                 Загрузить ещё один
               </button>
               <Link
                 href="/curator"
-                className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-colors flex items-center justify-center"
+                className="flex-1 py-3 bg-[#00A859] hover:bg-[#007A40] text-white rounded-[8px] font-semibold transition-colors flex items-center justify-center bcc-shadow"
               >
-                <BookOpen className="w-4 h-4 mr-2" />
+                <BookOpen className="w-4 h-4 mr-2" strokeWidth={1.75} />
                 Смотреть в дашборде
               </Link>
             </div>

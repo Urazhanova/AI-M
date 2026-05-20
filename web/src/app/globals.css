@@ -2,28 +2,51 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* BCC Brand */
+  --bcc-green:        #00A859;
+  --bcc-green-dark:   #007A40;
+  --bcc-green-light:  #E6F7EE;
+
+  --bcc-black:        #1A1A1A;
+  --bcc-gray-dark:    #4A4A4A;
+  --bcc-gray-mid:     #8C8C8C;
+  --bcc-gray-light:   #D9D9D9;
+  --bcc-gray-bg:      #F5F5F5;
+  --bcc-white:        #FFFFFF;
+
+  /* Product accents */
+  --bcc-iron:         #2C2C2C;
+  --bcc-gold:         #C9A227;
+  --bcc-travel:       #0FB5BA;
+  --bcc-crypto:       #9B1D27;
+  --bcc-family:       #1F6FEB;
+  --bcc-tabys:        #5BD8A3;
+  --bcc-pension:      #E8A76A;
+
+  --background: var(--bcc-gray-bg);
+  --foreground: var(--bcc-black);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* BCC card shadow */
+.bcc-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.bcc-shadow-hover:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 @media print {

@@ -3,41 +3,43 @@ import { GraduationCap, Briefcase } from 'lucide-react'
 
 export default function RoleSelectionPage() {
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center p-8">
       <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E6F7EE] text-[#00A859] rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00A859]"></span>
+          BCC University
+        </div>
+        <h1 className="text-5xl font-bold tracking-tight text-[#1A1A1A]">
           AI Mindset Tracker
         </h1>
-        <p className="text-zinc-400 mt-4 text-lg">Выберите вашу роль для входа в систему</p>
+        <p className="text-[#4A4A4A] mt-4 text-lg">Выберите вашу роль для входа в систему</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
         {/* Студент */}
-        <Link 
+        <Link
           href="/student"
-          className="group relative bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 rounded-3xl p-8 transition-all hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)] flex flex-col items-center text-center overflow-hidden"
+          className="group relative bg-white border border-[#D9D9D9] hover:border-[#00A859] rounded-[20px] p-8 transition-all bcc-shadow bcc-shadow-hover flex flex-col items-center text-center overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div className="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-            <GraduationCap className="w-10 h-10 text-blue-400" />
+          <div className="w-20 h-20 bg-[#E6F7EE] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+            <GraduationCap className="w-10 h-10 text-[#00A859]" strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-bold text-zinc-100 mb-3">Я Студент</h2>
-          <p className="text-zinc-400">
+          <h2 className="text-2xl font-bold text-[#1A1A1A] mb-3">Я Студент</h2>
+          <p className="text-[#4A4A4A]">
             Перейти к учебным материалам, отслеживать свой прогресс и общаться с AI-Тьютором.
           </p>
         </Link>
 
         {/* Куратор */}
-        <Link 
+        <Link
           href="/curator"
-          className="group relative bg-zinc-900 border border-zinc-800 hover:border-emerald-500/50 rounded-3xl p-8 transition-all hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] flex flex-col items-center text-center overflow-hidden"
+          className="group relative bg-white border border-[#D9D9D9] hover:border-[#00A859] rounded-[20px] p-8 transition-all bcc-shadow bcc-shadow-hover flex flex-col items-center text-center overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-            <Briefcase className="w-10 h-10 text-emerald-400" />
+          <div className="w-20 h-20 bg-[#E6F7EE] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+            <Briefcase className="w-10 h-10 text-[#00A859]" strokeWidth={1.5} />
           </div>
-          <h2 className="text-2xl font-bold text-zinc-100 mb-3">Я Куратор</h2>
-          <p className="text-zinc-400">
+          <h2 className="text-2xl font-bold text-[#1A1A1A] mb-3">Я Куратор</h2>
+          <p className="text-[#4A4A4A]">
             Управление когортой, проверка результатов сессий и анализ динамики mindset-сдвигов.
           </p>
         </Link>

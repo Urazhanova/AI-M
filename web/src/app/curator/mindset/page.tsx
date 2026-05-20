@@ -7,7 +7,6 @@ export default async function MindsetMapPage() {
   const fileContent = await getFileContent('mindset-map.md')
   const shifts: MindsetShift[] = fileContent ? parseMindsetMap(fileContent) : []
 
-  // Collect all unique student names
   const studentNames = new Set<string>()
   shifts.forEach(shift => {
     Object.keys(shift.statuses).forEach(name => studentNames.add(name))
@@ -16,52 +15,54 @@ export default async function MindsetMapPage() {
 
   const getStatusColor = (status: string) => {
     switch(status.toLowerCase()) {
-      case 'seeded': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-      case 'emerging': return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-      case 'internalized': return 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-      default: return 'bg-zinc-800/50 text-zinc-500 border-zinc-700/50'
+      case 'seeded': return 'bg-[#E6F7EE] text-[#007A40] border-[#00A859]/30'
+      case 'emerging': return 'bg-[#E8F1FE] text-[#1F6FEB] border-[#1F6FEB]/30'
+      case 'internalized': return 'bg-[#E0F7F8] text-[#0FB5BA] border-[#0FB5BA]/30'
+      default: return 'bg-[#F5F5F5] text-[#8C8C8C] border-[#D9D9D9]'
     }
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8">
       <header className="mb-10 max-w-7xl mx-auto flex justify-between items-end">
         <div>
-          <Link href="/" className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-block">
+          <Link href="/curator" className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-block transition-colors">
             ← Назад к дашборду
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight flex items-center">
-            <BrainCircuit className="w-10 h-10 mr-4 text-purple-400" />
+          <h1 className="text-4xl font-bold tracking-tight flex items-center text-[#1A1A1A]">
+            <span className="w-12 h-12 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-4">
+              <BrainCircuit className="w-7 h-7 text-[#00A859]" strokeWidth={1.5} />
+            </span>
             Mindset Map
           </h1>
-          <p className="text-zinc-400 mt-2 text-lg">Глобальная карта сдвигов (из mindset-map.md)</p>
+          <p className="text-[#4A4A4A] mt-2 text-lg">Глобальная карта сдвигов (из mindset-map.md)</p>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto">
-        <div className="bg-zinc-900 border border-zinc-800/80 rounded-2xl shadow-lg overflow-x-auto">
+        <div className="bg-white border border-[#D9D9D9] rounded-[14px] bcc-shadow overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-zinc-900/50 border-b border-zinc-800">
-                <th className="p-4 font-semibold text-zinc-300 w-16">#</th>
-                <th className="p-4 font-semibold text-zinc-300 w-1/4">От (From)</th>
-                <th className="p-4 font-semibold text-zinc-300 w-1/4">К (To)</th>
-                <th className="p-4 font-semibold text-zinc-300">Чанк</th>
+              <tr className="bg-[#F5F5F5] border-b border-[#D9D9D9]">
+                <th className="p-4 font-semibold text-[#1A1A1A] w-16 text-xs uppercase tracking-wider">#</th>
+                <th className="p-4 font-semibold text-[#1A1A1A] w-1/4 text-xs uppercase tracking-wider">От (From)</th>
+                <th className="p-4 font-semibold text-[#1A1A1A] w-1/4 text-xs uppercase tracking-wider">К (To)</th>
+                <th className="p-4 font-semibold text-[#1A1A1A] text-xs uppercase tracking-wider">Чанк</th>
                 {students.map(s => (
-                  <th key={s} className="p-4 font-semibold text-zinc-300 text-center">{s}</th>
+                  <th key={s} className="p-4 font-semibold text-[#1A1A1A] text-center text-xs uppercase tracking-wider capitalize">{s}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-[#D9D9D9]">
               {shifts.length > 0 ? shifts.map(shift => (
-                <tr key={shift.id} className="hover:bg-zinc-800/30 transition-colors">
-                  <td className="p-4 text-zinc-500">{shift.id}</td>
-                  <td className="p-4 font-medium text-zinc-200">{shift.from}</td>
-                  <td className="p-4 font-medium text-zinc-200">{shift.to}</td>
-                  <td className="p-4 text-sm font-mono text-zinc-400">{shift.firstChunk}</td>
+                <tr key={shift.id} className="hover:bg-[#F5F5F5] transition-colors">
+                  <td className="p-4 text-[#8C8C8C] font-medium">{shift.id}</td>
+                  <td className="p-4 font-medium text-[#1A1A1A]">{shift.from}</td>
+                  <td className="p-4 font-medium text-[#1A1A1A]">{shift.to}</td>
+                  <td className="p-4 text-sm font-mono text-[#4A4A4A]">{shift.firstChunk}</td>
                   {students.map(s => (
                     <td key={s} className="p-4 text-center">
-                      <span className={`inline-block px-3 py-1 text-xs rounded-full border ${getStatusColor(shift.statuses[s])}`}>
+                      <span className={`inline-block px-3 py-1 text-xs rounded-full border font-semibold ${getStatusColor(shift.statuses[s])}`}>
                         {shift.statuses[s] || '—'}
                       </span>
                     </td>
@@ -69,7 +70,7 @@ export default async function MindsetMapPage() {
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan={4 + students.length} className="p-8 text-center text-zinc-500">
+                  <td colSpan={4 + students.length} className="p-8 text-center text-[#8C8C8C]">
                     Не удалось загрузить данные из mindset-map.md
                   </td>
                 </tr>

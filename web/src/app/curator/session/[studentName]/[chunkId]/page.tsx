@@ -14,58 +14,61 @@ export default async function SessionPage({ params }: { params: Promise<{ studen
   const currentUnit = units.find(u => u.id === chunkId)
   const unitTitle = currentUnit ? currentUnit.title : chunkId
 
-  // Fetch materials
   const contentMd = await getFileContent(`course/${chunkId}/content.md`)
   const metaMd = await getFileContent(`course/${chunkId}/meta.md`)
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-8">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A] p-8">
       <header className="mb-8 max-w-7xl mx-auto">
-        <Link href={`/curator/student/${studentName}`} className="text-sm text-blue-400 hover:text-blue-300 mb-4 inline-block">
-          ← Назад к профилю {studentName}
+        <Link href={`/curator/student/${studentName}`} className="text-sm text-[#8C8C8C] hover:text-[#00A859] mb-4 inline-block transition-colors">
+          ← Назад к профилю <span className="capitalize">{studentName}</span>
         </Link>
-        <h1 className="text-3xl font-bold tracking-tight">Учебная сессия: {unitTitle}</h1>
-        <div className="flex gap-4 mt-2 text-zinc-400">
-          <p>Студент: <span className="text-zinc-200 font-medium">{studentName}</span></p>
-          <p>Юнит: <span className="font-mono">{chunkId}</span></p>
+        <h1 className="text-3xl font-bold tracking-tight text-[#1A1A1A]">Учебная сессия: {unitTitle}</h1>
+        <div className="flex gap-4 mt-2 text-[#4A4A4A]">
+          <p>Студент: <span className="text-[#1A1A1A] font-semibold capitalize">{studentName}</span></p>
+          <p>Юнит: <span className="font-mono text-[#1A1A1A]">{chunkId}</span></p>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        
+
         {/* Left Column: Material and Questions */}
         <div className="lg:col-span-2 space-y-8">
-          
+
           {/* Content.md */}
-          <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
-            <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex items-center">
-              <BookOpen className="w-5 h-5 mr-3 text-emerald-400" />
-              <h2 className="font-semibold">Материал (content.md)</h2>
+          <section className="bg-white border border-[#D9D9D9] rounded-[14px] overflow-hidden bcc-shadow">
+            <div className="p-4 border-b border-[#D9D9D9] bg-[#F5F5F5] flex items-center">
+              <span className="w-8 h-8 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                <BookOpen className="w-4 h-4 text-[#00A859]" strokeWidth={1.75} />
+              </span>
+              <h2 className="font-bold text-[#1A1A1A]">Материал (content.md)</h2>
             </div>
-            <div className="p-6 prose prose-invert prose-zinc max-w-none prose-headings:text-zinc-200 prose-a:text-blue-400">
+            <div className="p-6 prose prose-zinc max-w-none prose-headings:text-[#1A1A1A] prose-a:text-[#00A859] prose-strong:text-[#1A1A1A]">
               {contentMd ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {contentMd}
                 </ReactMarkdown>
               ) : (
-                <p className="text-zinc-500 not-prose">Не удалось загрузить материал. Возможно, файл отсутствует.</p>
+                <p className="text-[#8C8C8C] not-prose">Не удалось загрузить материал. Возможно, файл отсутствует.</p>
               )}
             </div>
           </section>
 
           {/* Meta.md */}
-          <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
-            <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex items-center">
-              <HelpCircle className="w-5 h-5 mr-3 text-amber-400" />
-              <h2 className="font-semibold">Вопросы и метаданные (meta.md)</h2>
+          <section className="bg-white border border-[#D9D9D9] rounded-[14px] overflow-hidden bcc-shadow">
+            <div className="p-4 border-b border-[#D9D9D9] bg-[#F5F5F5] flex items-center">
+              <span className="w-8 h-8 bg-[#E6F7EE] rounded-full flex items-center justify-center mr-3">
+                <HelpCircle className="w-4 h-4 text-[#00A859]" strokeWidth={1.75} />
+              </span>
+              <h2 className="font-bold text-[#1A1A1A]">Вопросы и метаданные (meta.md)</h2>
             </div>
-            <div className="p-6 prose prose-invert prose-zinc max-w-none prose-headings:text-zinc-200 prose-a:text-blue-400">
+            <div className="p-6 prose prose-zinc max-w-none prose-headings:text-[#1A1A1A] prose-a:text-[#00A859] prose-strong:text-[#1A1A1A]">
               {metaMd ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {metaMd}
                 </ReactMarkdown>
               ) : (
-                <p className="text-zinc-500 not-prose">Файл метаданных отсутствует.</p>
+                <p className="text-[#8C8C8C] not-prose">Файл метаданных отсутствует.</p>
               )}
             </div>
           </section>

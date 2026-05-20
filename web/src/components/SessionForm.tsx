@@ -22,12 +22,12 @@ export default function SessionForm({ studentName, chunkId }: SessionFormProps) 
   const [dodStatus, setDodStatus] = useState('In Progress')
   const [reflection, setReflection] = useState('')
   const [selectedBloom, setSelectedBloom] = useState<string[]>([])
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState<{type: 'idle' | 'success' | 'error', message: string}>({ type: 'idle', message: '' })
 
   const toggleBloom = (level: string) => {
-    setSelectedBloom(prev => 
+    setSelectedBloom(prev =>
       prev.includes(level) ? prev.filter(l => l !== level) : [...prev, level]
     )
   }
@@ -38,7 +38,7 @@ export default function SessionForm({ studentName, chunkId }: SessionFormProps) 
     setStatus({ type: 'idle', message: '' })
 
     const result = await submitSessionResult(studentName, chunkId, dodStatus, reflection, selectedBloom)
-    
+
     setIsSubmitting(false)
     if (result.success) {
       setStatus({ type: 'success', message: 'Сессия успешно сохранена! Коммит отправлен в ветку main.' })
@@ -50,25 +50,25 @@ export default function SessionForm({ studentName, chunkId }: SessionFormProps) 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg space-y-6">
-      <h2 className="text-xl font-semibold mb-4">Закрытие сессии</h2>
-      
+    <form onSubmit={handleSubmit} className="bg-white border border-[#D9D9D9] rounded-[14px] p-6 bcc-shadow space-y-6">
+      <h2 className="text-xl font-bold mb-4 text-[#1A1A1A]">Закрытие сессии</h2>
+
       {/* Bloom Levels */}
       <div>
-        <label className="block text-sm font-medium text-zinc-300 mb-3">Достигнутые уровни Блума:</label>
+        <label className="block text-sm font-semibold text-[#1A1A1A] mb-3">Достигнутые уровни Блума:</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {BLOOM_LEVELS.map(level => (
-            <label key={level} className={`flex items-center p-3 rounded-xl border cursor-pointer transition-colors ${selectedBloom.includes(level) ? 'bg-blue-500/10 border-blue-500/50 text-blue-300' : 'bg-zinc-950/50 border-zinc-800 hover:border-zinc-700'}`}>
-              <input 
-                type="checkbox" 
-                className="hidden" 
+            <label key={level} className={`flex items-center p-3 rounded-[8px] border cursor-pointer transition-colors ${selectedBloom.includes(level) ? 'bg-[#E6F7EE] border-[#00A859] text-[#007A40]' : 'bg-[#F5F5F5] border-[#D9D9D9] hover:border-[#00A859]/50 text-[#1A1A1A]'}`}>
+              <input
+                type="checkbox"
+                className="hidden"
                 checked={selectedBloom.includes(level)}
                 onChange={() => toggleBloom(level)}
               />
-              <div className={`w-4 h-4 rounded-sm border mr-3 flex items-center justify-center ${selectedBloom.includes(level) ? 'border-blue-500 bg-blue-500' : 'border-zinc-600'}`}>
-                {selectedBloom.includes(level) && <CheckCircle className="w-3 h-3 text-white" />}
+              <div className={`w-4 h-4 rounded-sm border mr-3 flex items-center justify-center ${selectedBloom.includes(level) ? 'border-[#00A859] bg-[#00A859]' : 'border-[#8C8C8C] bg-white'}`}>
+                {selectedBloom.includes(level) && <CheckCircle className="w-3 h-3 text-white" strokeWidth={2.5} />}
               </div>
-              <span className="text-sm">{level}</span>
+              <span className="text-sm font-medium">{level}</span>
             </label>
           ))}
         </div>
@@ -76,11 +76,11 @@ export default function SessionForm({ studentName, chunkId }: SessionFormProps) 
 
       {/* DoD Status */}
       <div>
-        <label className="block text-sm font-medium text-zinc-300 mb-2">Статус DoD (Definition of Done):</label>
-        <select 
+        <label className="block text-sm font-semibold text-[#1A1A1A] mb-2">Статус DoD (Definition of Done):</label>
+        <select
           value={dodStatus}
           onChange={(e) => setDodStatus(e.target.value)}
-          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="w-full bg-white border border-[#D9D9D9] rounded-[8px] px-4 py-3 text-[#1A1A1A] focus:outline-none focus:border-[#00A859] focus:ring-1 focus:ring-[#00A859]"
         >
           <option value="Completed">Completed (Пройдено)</option>
           <option value="In Progress">In Progress (В процессе)</option>
@@ -91,43 +91,43 @@ export default function SessionForm({ studentName, chunkId }: SessionFormProps) 
 
       {/* Reflection */}
       <div>
-        <label className="block text-sm font-medium text-zinc-300 mb-2">Заметки и рефлексия (обязательно):</label>
-        <textarea 
+        <label className="block text-sm font-semibold text-[#1A1A1A] mb-2">Заметки и рефлексия (обязательно):</label>
+        <textarea
           required
           rows={4}
           value={reflection}
           onChange={(e) => setReflection(e.target.value)}
           placeholder="Опишите, как прошла сессия, какие были инсайты или трудности..."
-          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-y"
+          className="w-full bg-white border border-[#D9D9D9] rounded-[8px] px-4 py-3 text-[#1A1A1A] placeholder-[#8C8C8C] focus:outline-none focus:border-[#00A859] focus:ring-1 focus:ring-[#00A859] resize-y"
         />
       </div>
 
       {/* Submit Button */}
       <div className="pt-2">
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isSubmitting || reflection.trim().length === 0}
-          className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-medium rounded-xl transition-all shadow-lg shadow-blue-500/20 disabled:shadow-none"
+          className="w-full flex items-center justify-center px-6 py-3 bg-[#00A859] hover:bg-[#007A40] disabled:bg-[#D9D9D9] disabled:text-[#8C8C8C] disabled:cursor-not-allowed text-white font-semibold rounded-[8px] transition-all"
         >
           {isSubmitting ? (
-            <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> Сохранение...</>
+            <><Loader2 className="w-5 h-5 mr-2 animate-spin" strokeWidth={2} /> Сохранение...</>
           ) : (
-            'Завершить сессию и сохранить (Commit)'
+            'Завершить сессию и сохранить'
           )}
         </button>
       </div>
 
       {/* Status Messages */}
       {status.type === 'success' && (
-        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl flex items-start">
-          <CheckCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
-          <p className="text-sm">{status.message}</p>
+        <div className="p-4 bg-[#E6F7EE] border border-[#00A859]/30 text-[#007A40] rounded-[8px] flex items-start">
+          <CheckCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" strokeWidth={1.75} />
+          <p className="text-sm font-medium">{status.message}</p>
         </div>
       )}
       {status.type === 'error' && (
-        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl flex items-start">
-          <AlertCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
-          <p className="text-sm">{status.message}</p>
+        <div className="p-4 bg-[#9B1D27]/10 border border-[#9B1D27]/30 text-[#9B1D27] rounded-[8px] flex items-start">
+          <AlertCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" strokeWidth={1.75} />
+          <p className="text-sm font-medium">{status.message}</p>
         </div>
       )}
     </form>
