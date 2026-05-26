@@ -24,6 +24,11 @@
 | s3-w1-oh-1 | lecture | ⬜ не начат | — | — |
 | s3-w1-oh-2 | lecture | ⬜ не начат | — | — |
 | s3-w1-oh-3 | lecture | ⬜ не начат | — | — |
+| s3-w3-lecture-a | lecture | ⬜ не начат | — | — |
+| s3-w3-lecture-b | lecture | ⬜ не начат | — | — |
+| s3-w3-lecture-c | lecture | ⬜ не начат | — | — |
+| s3-w3-lecture-d | lecture | ⬜ не начат | — | — |
+| s3-w3-lecture-e | lecture | ⬜ не начат | — | — |
 
 ---
 
