@@ -230,3 +230,62 @@ prerequisites: [s3-w1-workshop-setup]
 leads_to: []
 related: []
 ```
+
+### s3-w3-lecture-a
+```yaml
+id: s3-w3-lecture-a
+title: "Проблемы и решения хранения данных"
+date: 2026-05-19
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
+
+
+### s3-w3-lecture-b
+```yaml
+id: s3-w3-lecture-b
+title: "Управление и интеграция AI в компании"
+date: 2026-05-19
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
+
+
+### s3-w3-lecture-c
+```yaml
+id: s3-w3-lecture-c
+title: "Теория менеджмента 2.0"
+date: 2026-05-19
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
+
+
+### s3-w3-lecture-d
+```yaml
+id: s3-w3-lecture-d
+title: "Практические шаги AI-трансформации"
+date: 2026-05-19
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
+
+
+### s3-w3-lecture-e
+```yaml
+id: s3-w3-lecture-e
+title: "Экономические и макроэкономические эффекты AI"
+date: 2026-05-19
+type: lecture
+prerequisites: [s3-w1-lecture]
+leads_to: []
+related: []
+```
