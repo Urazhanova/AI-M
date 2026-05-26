@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import OpenAI from 'openai'
 import { octokit, branch } from '@/lib/github'
 
 const owner = process.env.GITHUB_OWNER || 'Urazhanova'
@@ -80,13 +80,35 @@ function appendUnitsToMyPath(
   return { updated: updatedLines.join('\n'), changed: true }
 }
 
+// Универсальный вызов OpenAI с retry на 429/503/5xx
+async function callOpenAI(
+  client: OpenAI,
+  params: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming
+): Promise<string> {
+  const maxAttempts = 3
+  let lastError: unknown = null
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      const r = await client.chat.completions.create(params)
+      return r.choices[0]?.message?.content ?? ''
+    } catch (err: any) {
+      lastError = err
+      const status = err?.status ?? err?.response?.status
+      const retriable = status === 429 || status === 503 || (status >= 500 && status < 600)
+      if (!retriable || attempt === maxAttempts - 1) throw err
+      await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)))
+    }
+  }
+  throw lastError ?? new Error('OpenAI: пустой ответ')
+}
+
 // ─── Main handler ─────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.GEMINI_API_KEY
+    const apiKey = process.env.OPENAI_API_KEY
     if (!apiKey) {
-      return NextResponse.json({ error: 'GEMINI_API_KEY не настроен' }, { status: 500 })
+      return NextResponse.json({ error: 'OPENAI_API_KEY не настроен' }, { status: 500 })
     }
 
     const formData = await req.formData()
@@ -98,17 +120,13 @@ export async function POST(req: NextRequest) {
     }
 
     const transcriptText = await file.text()
-    // gemini-2.5-flash handles 1M-token contexts; ~60K chars ≈ 15K tokens is safe
+    // gpt-4o имеет 128K context — 60K символов ≈ 15K токенов — безопасно
     const truncated = transcriptText.substring(0, 60000)
 
-    const genAI = new GoogleGenerativeAI(apiKey)
+    const client = new OpenAI({ apiKey })
+    const model = process.env.OPENAI_MODEL_TRANSCRIPT || 'gpt-4o'
 
     // ── Step 1: Split transcript into self-contained units ──────────────────
-    const splitModel = genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
-      generationConfig: { responseMimeType: 'application/json' },
-    })
-
     const splitPrompt = `Ты методист курса "AI-native организации".
 Раздели транскрипт на самостоятельные учебные юниты. Юнит — смысловая единица, которую можно изучить отдельно (одна крупная идея/тема/практика). Лекция 1.5–2 часа обычно даёт 2–5 юнитов. Не дроби слишком мелко: один юнит = 20–40 минут материала минимум.
 
@@ -142,8 +160,15 @@ ${chunkIdHint ? `Подсказка по базовому ID от куратор
 - scope_summary критично — на нём строится извлечение контента
 - Не добавляй текст вне JSON`
 
-    const splitResult = await splitModel.generateContent(splitPrompt)
-    const splitRaw = splitResult.response.text().trim()
+    const splitRaw = await callOpenAI(client, {
+      model,
+      messages: [
+        { role: 'system', content: 'Ты возвращаешь только валидный JSON, без обрамляющего текста.' },
+        { role: 'user', content: splitPrompt },
+      ],
+      response_format: { type: 'json_object' },
+      temperature: 0.3,
+    })
 
     let unitSpecs: Array<{
       chunkId: string
@@ -159,17 +184,16 @@ ${chunkIdHint ? `Подсказка по базовому ID от куратор
       unitSpecs = Array.isArray(parsed.units) ? parsed.units : []
     } catch {
       return NextResponse.json(
-        { error: `Не удалось распарсить разбивку от Gemini: ${splitRaw.substring(0, 300)}` },
+        { error: `Не удалось распарсить разбивку от OpenAI: ${splitRaw.substring(0, 300)}` },
         { status: 500 }
       )
     }
 
     if (unitSpecs.length === 0) {
-      return NextResponse.json({ error: 'Gemini не вернул ни одного юнита' }, { status: 500 })
+      return NextResponse.json({ error: 'OpenAI не вернул ни одного юнита' }, { status: 500 })
     }
 
     // ── Step 2: For each unit — generate content.md + meta.md, commit ───────
-    const contentModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
     const created: Array<{
       chunkId: string
       title: string
@@ -207,8 +231,14 @@ ${truncated}
 - Минимум 400 слов
 - Только Markdown, без JSON`
 
-      const contentResult = await contentModel.generateContent(contentPrompt)
-      const contentMd = contentResult.response.text().trim()
+      const contentMd = (await callOpenAI(client, {
+        model,
+        messages: [
+          { role: 'system', content: 'Ты методист. Возвращаешь чистый Markdown без обрамления.' },
+          { role: 'user', content: contentPrompt },
+        ],
+        temperature: 0.4,
+      })).trim()
 
       const { sprint, week } = parseChunkId(chunkId)
       const prereqYaml = safePrereqs.join(', ')
@@ -320,8 +350,14 @@ related: []
 \`\`\`
 `
 
-      const metaResult = await contentModel.generateContent(metaPrompt)
-      const metaMd = metaResult.response.text().trim()
+      const metaMd = (await callOpenAI(client, {
+        model,
+        messages: [
+          { role: 'system', content: 'Ты методист. Возвращаешь чистый Markdown без обрамления.' },
+          { role: 'user', content: metaPrompt },
+        ],
+        temperature: 0.4,
+      })).trim()
 
       await commitFile(
         `course/${chunkId}/content.md`,
@@ -426,6 +462,13 @@ related: []
 
   } catch (err: any) {
     console.error('process-transcript error:', err)
+    const status = err?.status ?? err?.response?.status
+    if (status === 429 || status === 503) {
+      return NextResponse.json(
+        { error: 'OpenAI сейчас перегружен. Попробуй ещё раз через минуту.' },
+        { status: 503 }
+      )
+    }
     return NextResponse.json({ error: err?.message || 'Неизвестная ошибка' }, { status: 500 })
   }
 }

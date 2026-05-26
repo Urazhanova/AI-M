@@ -20,9 +20,16 @@ export default function AITutorChat({ studentName, chunkId, metaContent }: { stu
   const [error, setError] = useState<string | null>(null)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    // Скроллим только внутри контейнера чата, не трогая окно страницы.
+    // scrollIntoView() двигает все родительские скролл-контейнеры — поэтому
+    // вместо него выставляем scrollTop напрямую на нашем div.
+    const el = scrollContainerRef.current
+    if (el) {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
+    }
   }, [messages, isVerifying])
 
   const handleSend = async (isManualEnd: boolean = false) => {
@@ -88,7 +95,7 @@ export default function AITutorChat({ studentName, chunkId, metaContent }: { stu
         )}
       </div>
 
-      <div className="flex-1 p-6 overflow-y-auto space-y-6 bg-white">
+      <div ref={scrollContainerRef} className="flex-1 p-6 overflow-y-auto space-y-6 bg-white">
         {messages.map((msg, idx) => (
           <div key={idx} className={`flex items-start gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
             <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center mt-1 ${msg.role === 'user' ? 'bg-[#F5F5F5] border border-[#D9D9D9]' : 'bg-[#E6F7EE]'}`}>

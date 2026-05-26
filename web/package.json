@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.105.3",
     "@tailwindcss/typography": "^0.5.19",
     "@types/js-yaml": "^4.0.9",
@@ -18,6 +17,7 @@
     "lucide-react": "^1.14.0",
     "next": "16.2.6",
     "octokit": "^5.0.5",
+    "openai": "^6.39.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
